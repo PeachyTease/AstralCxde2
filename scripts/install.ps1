@@ -4,14 +4,11 @@
         Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "irm install.msgang.com | iex"
         break
     }
-
 # Load ddls to the current session.
     Add-Type -AssemblyName PresentationFramework, System.Drawing, PresentationFramework, System.Windows.Forms, WindowsFormsIntegration, PresentationCore
     [System.Windows.Forms.Application]::EnableVisualStyles()
-
 # Place your xaml code from Visual Studio in here string (between @ symbols)
 # $xamlinput = @'<xaml code here'@
-
 $xamlInput = @'
 <Window x:Class="install.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -20,7 +17,7 @@ $xamlInput = @'
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:install"
         mc:Ignorable="d"
-        Title="Microsoft Installation Tool - www.msgang.com" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="https://msgang.com/wp-content/uploads/2025/07/images.png" Width="1140" Height="522">
+        Title="AstralCxde " ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="https://msgang.com/wp-content/uploads/2025/07/images.png" Width="1140" Height="522">
     <Grid Margin="0,0,0,-6">
         <GroupBox x:Name="groupBoxMicrosoftOffice" Header="Select a product to install:" BorderBrush="#FF164A69" Margin="125,10,0,0" Height="462" Width="986" FontFamily="Consolas" FontSize="11" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Canvas HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -97,7 +94,7 @@ $xamlInput = @'
                 <TextBox x:Name="textBox2" TextWrapping="Wrap" Text="(*) Default mode is Install. If you want to download only, select Download mode." Canvas.Top="360" FontSize="10.5" BorderBrush="{x:Null}" Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="-3" Padding="0,0,0,2"/>
                 <TextBox x:Name="textBox3" TextWrapping="Wrap" Text="(*) The downloaded files would be saved on the current user's desktop." Canvas.Top="377" FontSize="10.5" BorderBrush="{x:Null}" Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="-3" Padding="0,0,0,2" Margin="0,2,0,2"/>
                 <TextBox x:Name="textBox4" TextWrapping="Wrap" Text="(*) To activate license. Change the Mode to Activate then click Submit button." Canvas.Top="395" FontSize="10.5" BorderBrush="{x:Null}" Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="-3" Margin="0,2,0,2" Padding="0,0,0,2"/>
-                <TextBox x:Name="textBox5" TextWrapping="Wrap" Text="(*) More FREE Microsoft products, please visit:" Canvas.Top="414" FontSize="10.5" BorderBrush="{x:Null}" Background="{x:Null}" Canvas.Left="-3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,2,0,2" Padding="0,0,0,2"/>
+                <TextBox x:Name="textBox5" TextWrapping="Wrap" Text="(*)For help , please visit and send a message:" Canvas.Top="414" FontSize="10.5" BorderBrush="{x:Null}" Background="{x:Null}" Canvas.Left="-3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,2,0,2" Padding="0,0,0,2"/>
                 <Label x:Name="LabelRemoveAll" Content="Remove All Apps:" FontWeight="Bold" Canvas.Left="502" Canvas.Top="334" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" Margin="110,10,0,0"/>
                 <Button x:Name="buttonRemoveAll" Content="Remove All" Background="#FFE23B15" FontFamily="Consolas" FontSize="10" Foreground="White" Height="27" Width="73" UseLayoutRounding="True" BorderBrush="{x:Null}" HorizontalAlignment="Left" Canvas.Left="670" Canvas.Top="358" VerticalAlignment="Center" Margin="110,10,0,0"/>
                 <Image x:Name="image" Height="81" Width="78" Canvas.Left="40" Canvas.Top="112" Source="https://raw.githubusercontent.com/msgang822/microsoft/refs/heads/main/files/office/donate.png" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden"/>
@@ -155,33 +152,26 @@ $xamlInput = @'
         <ProgressBar x:Name="progressbar" HorizontalAlignment="Left" Height="10" Margin="147,226,0,0" VerticalAlignment="Top" Width="118" IsEnabled="False" Background="{x:Null}" BorderBrush="{x:Null}"/>
         <TextBox x:Name="textbox" TextWrapping="Wrap" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="147,248,0,0" FontFamily="Consolas" FontSize="11" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsUndoEnabled="False"/>
         <Label x:Name="Link1" HorizontalAlignment="Left" Margin="405,436,0,0" VerticalAlignment="Top" Width="120" FontSize='10.5' ToolTip='vmware' FontFamily="Consolas" Padding="5,5,5,2">
-            <Hyperlink NavigateUri="https://msgang.com">https://msgang.com</Hyperlink>
+            <Hyperlink NavigateUri="Contact Jan">https://www.facebook.com/janloveskim11</Hyperlink>
         </Label>
-
     </Grid>
 </Window>
 '@
-
 # Store form objects (variables) in PowerShell
-
     [xml]$xaml = $xamlInput -replace '^<Window.*', '<Window' -replace 'mc:Ignorable="d"','' -replace "x:Name",'Name'
     $xmlReader = (New-Object System.Xml.XmlNodeReader $xaml)
     $Form = [Windows.Markup.XamlReader]::Load( $xmlReader)
-
     $xaml.SelectNodes("//*[@Name]") | ForEach-Object -Process {
         Set-Variable -Name ($_.Name) -Value $Form.FindName($_.Name)
     }
-
-    $Link1.Add_PreviewMouseDown({[system.Diagnostics.Process]::start('https://msgang.com')})
-
+    $Link1.Add_PreviewMouseDown({[system.Diagnostics.Process]::start('Contact Jan')})
 # Download links
-    $uri            = "https://github.com/msgang822/microsoft/raw/refs/heads/main/files/office/setup.exe"
-    $uri2013        = "https://github.com/msgang822/microsoft/raw/refs/heads/main/files/office/bin2013.exe"
-    $uri2016        = "https://github.com/msgang822/microsoft/raw/refs/heads/main/files/office/setup.exe"
-    $activator      = 'https://github.com/msgang822/microsoft/raw/refs/heads/main/files/office/activator.bat'
-    $uninstall      = "https://github.com/msgang822/microsoft/raw/refs/heads/main/files/office/setup.exe"
-    $removeAllXML   = 'https://raw.githubusercontent.com/msgang822/microsoft/refs/heads/main/files/office/RemoveAll/configuration.xml'
-
+    $uri            = "https://github.com/PeachyTease/AstralCxde2/raw/refs/heads/main/files/office/setup.exe"
+    $uri2013        = "https://github.com/PeachyTease/AstralCxde2/raw/refs/heads/main/files/office/bin2013.exe"
+    $uri2016        = "https://github.com/PeachyTease/AstralCxde2/raw/refs/heads/main/files/office/setup.exe"
+    $activator      = 'https://github.com/PeachyTease/AstralCxde2/raw/refs/heads/main/files/office/activator.bat'
+    $uninstall      = "https://github.com/PeachyTease/AstralCxde2/raw/refs/heads/main/files/office/setup.exe"
+    $removeAllXML   = 'https://github.com/PeachyTease/AstralCxde2/refs/heads/main/files/office/RemoveAll/configuration.xml'
 # Prepiaration for download and install
     function PreparingOffice {
         if ($radioButtonDownload.IsChecked) {
@@ -189,12 +179,10 @@ $xamlInput = @'
             Set-Location $workingDir
             Invoke-Item $workingDir
         }
-
         if ($radioButtonInstall.IsChecked) {
             $workingDir = New-Item -Path $env:temp\ClickToRun\$productId -ItemType Directory -Force
             Set-Location $workingDir
         }
-
         New-Item $workingDir\Configuration -ItemType Directory -Force
         $configurationFile = "configuration-x$arch.xml"
         New-Item .\Configuration\$configurationFile -ItemType File -Force
@@ -205,13 +193,10 @@ $xamlInput = @'
         Add-Content .\Configuration\$configurationFile -Value "</Product>"
         Add-Content .\Configuration\$configurationFile -Value "</Add>"
         Add-Content .\Configuration\$configurationFile -Value "</Configuration>"
-
         $batchFile = "Install-$($arch)bit.bat"
         New-Item $batchFile -ItemType File -Force
         Add-content $batchFile -Value "%~dp0Configuration\ClickToRun.exe /configure %~dp0Configuration\$configurationFile"
-
         (New-Object Net.WebClient).DownloadFile($uri, "$workingDir\Configuration\ClickToRun.exe")
-
         $sync.configurationFile = $configurationFile
         $sync.workingDir = $workingDir
     }
@@ -227,7 +212,6 @@ $xamlInput = @'
                 $sync.host.UI.WriteDebugLine($debugMessage)
             }
         } #>
-
 <#         function Write-VerboseDebug {
             param([Parameter(Mandatory)]
             [string]
@@ -236,22 +220,18 @@ $xamlInput = @'
                 $sync.host.UI.WriteVerboseLine($verboseMessage)
             }
         } #>
-
         # Write-VerboseDebug "Downloading the $($sync.productName)"
         # Write-VerboseDebug "Mode: $($sync.mode)"
         # Write-VerboseDebug "Configuration file: $($sync.configurationFile)"
-
         # To referece our elements we use the $sync variable from hashtable.
             $sync.Form.Dispatcher.Invoke([action] { $sync.buttonSubmit.Visibility = "Hidden" })
             $sync.Form.Dispatcher.Invoke([action] { $sync.textbox.Text = "$($sync.UIstatus) $($sync.productName) $($sync.arch)-bit ($($sync.language))" })
             $sync.Form.Dispatcher.Invoke([action] { $sync.ProgressBar.BorderBrush = "#FF707070" })
             $sync.Form.Dispatcher.Invoke([action] { $sync.ProgressBar.IsIndeterminate = $true })
             $sync.Form.Dispatcher.Invoke([action] { $sync.image.Visibility = "Visible" })
-
         Set-Location -Path $($sync.workingDir)
         # Write-VerboseDebug "Working (download) path: $pwd"
         # Write-VerboseDebug "Command to run: .\Configuration\ClickToRun.exe $($sync.mode) .\Configuration\$($sync.configurationFile)"
-
         Start-Process -FilePath .\Configuration\ClickToRun.exe -ArgumentList "$($sync.mode) .\Configuration\$($sync.configurationFile)" -NoNewWindow -Wait
                 
         # Bring back our Button, set the Label and ProgressBar, we're done..
@@ -261,10 +241,8 @@ $xamlInput = @'
             $sync.Form.Dispatcher.Invoke([action] { $sync.textbox.Text = 'Completed' })
             $sync.Form.Dispatcher.Invoke([action] { $sync.ProgressBar.IsIndeterminate = $false })
             $sync.Form.Dispatcher.Invoke([action] { $sync.ProgressBar.Value = '100' })
-
             # Write-VerboseDebug "Done. You can close this window now."
     }
-
 # Share info between runspaces
     $sync = [hashtable]::Synchronized(@{})
     $sync.runspace = $runspace
@@ -276,67 +254,51 @@ $xamlInput = @'
     $sync.buttonSubmit = $buttonSubmit
     $sync.DebugPreference = $DebugPreference
     $sync.VerbosePreference = $VerbosePreference
-
 # Build a runspace
     $runspace = [runspacefactory]::CreateRunspace()
     $runspace.ApartmentState = 'STA'
     $runspace.ThreadOptions = 'ReuseThread'
     $runspace.Open()
-
 # Add shared data to the runspace
     $runspace.SessionStateProxy.SetVariable("sync", $sync)
-
 # Create a Powershell instance
     $PSIinstance = [powershell]::Create().AddScript($scriptBlock)
     $PSIinstance.Runspace = $runspace
-
-
 # INSTALL/DOWNLOAD/ACTIVATE Microsoft Office with a runspace
-
     $ActivateOffice = {
         $sync.Form.Dispatcher.Invoke([action] { $sync.textbox.Text = "Activating Microsoft Office..." })
         $sync.Form.Dispatcher.Invoke([action] { $sync.buttonSubmit.Visibility = "Hidden" })
         $sync.Form.Dispatcher.Invoke([action] { $sync.ProgressBar.BorderBrush = "#FF707070" })
         $sync.Form.Dispatcher.Invoke([action] { $sync.ProgressBar.IsIndeterminate = $true })
         $sync.Form.Dispatcher.Invoke([action] { $sync.image.Visibility = "Visible" })
-
         Set-Location -Path $($sync.workingDir)
         (New-Object Net.WebClient).DownloadFile($($sync.activator), "$($sync.workingDir)\03.Activator.bat")
         Start-Process -FilePath .\03.Activator.bat -Wait
-
         $sync.Form.Dispatcher.Invoke([action] { $sync.image.Visibility = "Hidden" })
         $sync.Form.Dispatcher.Invoke([action] { $sync.buttonSubmit.Visibility = 'Visible' })
         $sync.Form.Dispatcher.Invoke([action] { $sync.buttonSubmit.Content = 'Submit' })
         $sync.Form.Dispatcher.Invoke([action] { $sync.textbox.Text = 'Completed' })
         $sync.Form.Dispatcher.Invoke([action] { $sync.ProgressBar.IsIndeterminate = $false })
         $sync.Form.Dispatcher.Invoke([action] { $sync.ProgressBar.Value = '100' })
-
         # Cleanup
         Set-Location ..
         Remove-Item -Path ClickToRunA -Recurse -Force
     }
-
     $buttonSubmit.Add_Click( {
-
         if ($radioButtonActivate.IsChecked) {
-
             $workingDir = New-Item -Path $env:temp\ClickToRunA -ItemType Directory -Force
             Set-Location $workingDir
             $sync.workingDir = $workingDir
             $sync.activator = $activator
-
             $PSIinstance = [powershell]::Create().AddScript($ActivateOffice)
             $PSIinstance.Runspace = $runspace
             $PSIinstance.BeginInvoke()
-
         } else {
             $i = 0
             if ($radioButtonArch32.IsChecked) {$arch = '32'}
             if ($radioButtonArch64.IsChecked) {$arch = '64'}
-
             if ($radioButtonVolume.IsChecked) {$licType = 'Volume'}
             if ($radioButtonRetail.IsChecked) {$licType = 'Retail'}
-
             if ($radioButtonEnglish.IsChecked) {$languageId="en-US"; $language = 'English'}
             if ($radioButtonJapanese.IsChecked) {$languageId="ja-JP"; $language = 'Japanese'}
             if ($radioButtonKorean.IsChecked) {$languageId="ko-KR"; $language = 'Korean'}
@@ -346,14 +308,11 @@ $xamlInput = @'
             if ($radioButtonHindi.IsChecked) {$languageId="hi-IN"; $language = 'Hindi'}
             if ($radioButtonGerman.IsChecked) {$languageId="de-DE"; $language = 'German'}
             if ($radioButtonVietnamese.IsChecked) {$languageId="vi-VN"; $language = 'Vietnamese'}
-
             if ($radioButtonDownload.IsChecked) {$mode = '/download'; $UIstatus = 'Downlading'}
             if ($radioButtonInstall.IsChecked) {$mode = '/configure'; $UIstatus = 'Installing'}
-
             if ($radioButton365Home.IsChecked -eq $true) {$productId = "O365HomePremRetail"; $productName = 'Microsoft 365 Home'; $i++}
             if ($radioButton365Business.IsChecked -eq $true) {$productId = "O365BusinessRetail"; $productName = 'Microsoft 365 Apps for Business'; $i++}
             if ($radioButton365Enterprise.IsChecked -eq $true) {$productId = "O365ProPlusRetail"; $productName = 'Microsoft 365 Apps for Enterprise'; $i++}
-
         # For Office 2024
             if ($radioButton2024Pro.IsChecked -eq $true) {$productId = "ProPlus2024$licType"; $productName = 'Office 2024 Professional LTSC 2024'; $i++}
             if ($radioButton2024Std.IsChecked -eq $true) {$productId = "Standard2024$licType"; $productName = 'Office 2024 Standard LTSC'; $i++}
@@ -369,7 +328,6 @@ $xamlInput = @'
             if ($radioButton2024Access.IsChecked -eq $true) {$productId = "Access2024$licType"; $productName = 'Microsoft Access LTSC 2024'; $i++}
             if ($radioButton2024HomeBusiness.IsChecked -eq $true) {$productId = "HomeBusiness2024Retail"; $productName = 'Office HomeBusiness 2024'; $i++}
             if ($radioButton2024HomeStudent.IsChecked -eq $true) {$productId = "HomeStudent2024Retail"; $productName = 'Office HomeStudent LTSC 2024'; $i++}
-
         # For Office 2021
             if ($radioButton2021Pro.IsChecked -eq $true) {$productId = "ProPlus2021$licType"; $productName = 'Office 2021 Professional LTSC 2021'; $i++}
             if ($radioButton2021Std.IsChecked -eq $true) {$productId = "Standard2021$licType"; $productName = 'Office 2021 Standard LTSC'; $i++}
@@ -385,7 +343,6 @@ $xamlInput = @'
             if ($radioButton2021Access.IsChecked -eq $true) {$productId = "Access2021$licType"; $productName = 'Microsoft Access LTSC 2021'; $i++}
             if ($radioButton2021HomeBusiness.IsChecked -eq $true) {$productId = "HomeBusiness2021Retail"; $productName = 'Office HomeBusiness 2021'; $i++}
             if ($radioButton2021HomeStudent.IsChecked -eq $true) {$productId = "HomeStudent2021Retail"; $productName = 'Office HomeStudent LTSC 2021'; $i++}
-
         # For Office 2019
             if ($radioButton2019Pro.IsChecked -eq $true) {$productId = "ProPlus2019$licType"; $productName = 'Office 2019 Professional Plus'; $i++}
             if ($radioButton2019Std.IsChecked -eq $true) {$productId = "Standard2019$licType"; $productName = 'Office 2019 Standard'; $i++}
@@ -401,7 +358,6 @@ $xamlInput = @'
             if ($radioButton2019Access.IsChecked -eq $true) {$productId = "Access2019$licType"; $productName = 'Microsoft Access 2019'; $i++}
             if ($radioButton2019HomeBusiness.IsChecked -eq $true) {$productId = "HomeBusiness2019Retail"; $productName = 'Office HomeBusiness 2019'; $i++}
             if ($radioButton2019HomeStudent.IsChecked -eq $true) {$productId = "HomeStudent2019Retail"; $productName = 'Office HomeStudent 2019'; $i++}
-
         # For Office 2016
             if ($radioButton2016Pro.IsChecked -eq $true) {$productId = "ProfessionalRetail"; $uri = $uri2016; $productName = 'Office 2016 Professional Plus'; $i++}
             if ($radioButton2016Std.IsChecked -eq $true) {$productId = "StandardRetail"; $uri = $uri2016; $productName = 'Office 2016 Standard'; $i++}
@@ -416,7 +372,6 @@ $xamlInput = @'
             if ($radioButton2016Publisher.IsChecked -eq $true) {$productId = "PublisherRetail"; $uri = $uri2016; $productName = 'Microsoft Publisher 2016'; $i++}
             if ($radioButton2016Access.IsChecked -eq $true) {$productId = "AccessRetail"; $uri = $uri2016; $productName = 'Microsoft Access 2016'; $i++}
             if ($radioButton2016OneNote.IsChecked -eq $true) {$productId = "OneNoteRetail"; $uri = $uri2016; $productName = 'Microsoft Onenote 2016'; $i++}
-
         # For Office 2013
             if ($radioButton2013Pro.IsChecked -eq $true) {$productId = "ProfessionalRetail"; $uri = $uri2013; $productName = 'Office 2013 Professional Plus'; $i++}
             if ($radioButton2013Std.IsChecked -eq $true) {$productId = "StandardRetail"; $uri = $uri2013; $productName = 'Office 2013 Standard'; $i++}
@@ -436,7 +391,6 @@ $xamlInput = @'
             $sync.language = $language
             $sync.UIstatus = $UIstatus
             $sync.productName = $productName
-
             if ($i -eq '1') {
                 PreparingOffice
                 $PSIinstance = [powershell]::Create().AddScript($DownloadInstallOffice)
@@ -449,10 +403,8 @@ $xamlInput = @'
             } 
         }
     })
-
 # Uninstall all installed Microsoft Office apps.
     $UninstallOffice = {
-
         $sync.Form.Dispatcher.Invoke([action] { $sync.textbox.Text = "Uninstalling Microsoft Office..." })
         $sync.Form.Dispatcher.Invoke([action] { $sync.buttonSubmit.Visibility = "Hidden" })
         $sync.Form.Dispatcher.Invoke([action] { $sync.ProgressBar.BorderBrush = "#FF707070" })
@@ -464,54 +416,43 @@ $xamlInput = @'
         # (New-Object Net.WebClient).DownloadFile($($sync.uninstall), "$($sync.workingDir)\04.Uninstall.bat")
         (New-Object Net.WebClient).DownloadFile($($sync.removeAllXML), "$($sync.workingDir)\configuration.xml")
         (New-Object Net.WebClient).DownloadFile($($sync.uri), "$($sync.workingDir)\ClickToRun.exe")
-
         $sync.Form.Dispatcher.Invoke([action] { $sync.textbox.Text = "Uninstalling Using Office Deployment Tool..." })
         $sync.Form.Dispatcher.Invoke([action] { $sync.buttonSubmit.Visibility = "Hidden" })
         $sync.Form.Dispatcher.Invoke([action] { $sync.ProgressBar.BorderBrush = "#FF707070" })
         $sync.Form.Dispatcher.Invoke([action] { $sync.ProgressBar.IsIndeterminate = $true })
         $sync.Form.Dispatcher.Invoke([action] { $sync.image.Visibility = "Visible" })
-
         # Start-Process -FilePath .\04.Uninstall.bat -Wait
         Start-Process -FilePath .\ClickToRun.exe -ArgumentList "/configure .\configuration.xml" -NoNewWindow -Wait
-
         if (Test-Path -Path "C:\Program Files*\Microsoft Office\Office15\ospp.vbs") {
             (New-Object Net.WebClient).DownloadFile('https://aka.ms/SaRA_EnterpriseVersionFiles', "$($sync.workingDir)\SaRA.zip")
             Expand-Archive -Path .\SaRA.zip -DestinationPath .\SaRA
-
             $sync.Form.Dispatcher.Invoke([action] { $sync.textbox.Text = "Running Scenario OfficeScrubScenario..." })
             $sync.Form.Dispatcher.Invoke([action] { $sync.buttonSubmit.Visibility = "Hidden" })
             $sync.Form.Dispatcher.Invoke([action] { $sync.ProgressBar.BorderBrush = "#FF707070" })
             $sync.Form.Dispatcher.Invoke([action] { $sync.ProgressBar.IsIndeterminate = $true })
             $sync.Form.Dispatcher.Invoke([action] { $sync.image.Visibility = "Visible" })
-
             Start-Process -FilePath ".\SaRA\SaRACmd.exe" -ArgumentList "-S OfficeScrubScenario -AcceptEula -OfficeVersion All" -NoNewWindow -Wait
         }
-
         $sync.Form.Dispatcher.Invoke([action] { $sync.image.Visibility = "Hidden" })
         $sync.Form.Dispatcher.Invoke([action] { $sync.buttonSubmit.Visibility = 'Visible' })
         $sync.Form.Dispatcher.Invoke([action] { $sync.buttonSubmit.Content = 'Submit' })
         $sync.Form.Dispatcher.Invoke([action] { $sync.textbox.Text = 'Completed' })
         $sync.Form.Dispatcher.Invoke([action] { $sync.ProgressBar.IsIndeterminate = $false })
         $sync.Form.Dispatcher.Invoke([action] { $sync.ProgressBar.Value = '100' })
-
         # Cleanup
         Set-Location ..
         Remove-Item ClickToRunU -Recurse -Force
     }
-
     $buttonRemoveAll.Add_Click({
-
         if ($radioButtonRemoveAllApp.IsChecked) {
             $workingDir = New-Item -Path $env:temp\ClickToRunU -ItemType Directory -Force
             Set-Location $workingDir
             $sync.workingDir = $workingDir
             $sync.uri = $uri
             $sync.removeAllXML = $removeAllXML
-
             $PSIinstance = [powershell]::Create().AddScript($UninstallOffice)
             $PSIinstance.Runspace = $runspace
             $PSIinstance.BeginInvoke()
         }
     })
-
 $null = $Form.ShowDialog()
